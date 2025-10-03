@@ -22,7 +22,7 @@ function App() {
 
   return (
     <div className="bg-neutral-950 h-screen py-4 px-4">
-      <h1 className="text-white text-6xl mb-10">Toggle</h1>
+      <h1 className="text-white text-6xl mb-10">toggl</h1>
 
       <button
         onClick={handleAddMonthCard}
@@ -32,15 +32,25 @@ function App() {
         Add Month
       </button>
 
-      {/* <Card>
-        <h2 className="text-white text-5xl pb-8">October</h2>
-        <div
-          onClick={handleTask}
-          className={`border-2 border-indigo-600 rounded h-8 w-8 ${
-            isDone && "bg-indigo-600"
-          }`}
-        ></div>
-      </Card> */}
+      {month && (
+        <Card>
+          <h2 className="text-white text-5xl pb-8">{month}</h2>
+          <div onClick={handleTask}>
+            <div className="grid grid-cols-7 gap-2">
+              {days.map((day) => {
+                return (
+                  <div
+                    key={day}
+                    className={`border-2 border-indigo-600 rounded h-8 w-8 ${
+                      isDone && "bg-indigo-600"
+                    }`}
+                  ></div>
+                );
+              })}
+            </div>
+          </div>
+        </Card>
+      )}
     </div>
   );
 }
