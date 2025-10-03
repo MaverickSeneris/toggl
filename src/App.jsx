@@ -1,17 +1,22 @@
 import { useState } from "react";
 import Card from "./components/Card";
-import getDays from "./utils/getDays";
-import getMonthName from "./utils/getMonthName";
+import Button from "./components/Button";
 import { AiOutlinePlus } from "react-icons/ai";
 
+import getDays from "./utils/getDays";
+import getMonthName from "./utils/getMonthName";
+
 function App() {
-  const [isDone, setIsDone] = useState(false);
+  const [doneDays, setDoneDays] = useState({});
   const [month, setMonth] = useState(null);
   const [days, setDays] = useState([]);
 
-  function handleTask() {
-    setIsDone(!isDone);
-  }
+  const toggleTask = (day) => {
+    setDoneDays((prev) => ({
+      ...prev,
+      [day]: !prev[day], // flip just that day
+    }));
+  };
 
   function handleAddMonthCard() {
     const monthName = getMonthName();
@@ -21,28 +26,28 @@ function App() {
   }
 
   return (
-    <div className="bg-neutral-950 h-screen py-4 px-4">
+    <div className="relative bg-neutral-950 h-screen py-4 px-4">
       <h1 className="text-white text-6xl mb-10">toggl</h1>
 
-      <button
-        onClick={handleAddMonthCard}
-        className="flex items-center gap-2 px-6 py-3 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700"
+      <Button
+        handler={handleAddMonthCard}
+        position={"bottom-4 right-4 absolute "}
       >
-        <AiOutlinePlus size={20} />
-        Add Month
-      </button>
+        <AiOutlinePlus size={60} className="text-neutral-800" />
+      </Button>
 
       {month && (
         <Card>
           <h2 className="text-white text-5xl pb-8">{month}</h2>
-          <div onClick={handleTask}>
+          <div>
             <div className="grid grid-cols-7 gap-2">
               {days.map((day) => {
                 return (
                   <div
+                    onClick={() => toggleTask(day)}
                     key={day}
-                    className={`border-2 border-indigo-600 rounded h-8 w-8 ${
-                      isDone && "bg-indigo-600"
+                    className={`border-2 border-indigo-600 rounded h-10 w-10 ${
+                      doneDays[day] && "bg-indigo-600"
                     }`}
                   ></div>
                 );
