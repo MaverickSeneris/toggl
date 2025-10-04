@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Card from "./components/Card";
 import Button from "./components/Button";
 import { AiOutlinePlus } from "react-icons/ai";
+import Heading from "./components/Heading";
 
 import getDays from "./utils/getDays";
 import getMonthName from "./utils/getMonthName";
@@ -63,7 +64,9 @@ function App() {
 
   return (
     <div className="relative bg-[#2E383C] h-screen py-4 px-4">
-      <h1 className="text-white text-6xl mb-10">toggl</h1>
+      <div className="pb-10">
+        <Heading text="togglr" size={1} color="text-[#dbbc7f]" />
+      </div>
 
       <Button
         handler={handleAddMonthCard}
@@ -74,7 +77,9 @@ function App() {
 
       {month && (
         <Card>
-          <h2 className="text-white text-5xl pb-8">{month}</h2>
+          <div className="pb-6">
+            <Heading text={month} size={2} color="text-[#a7c080]" />
+          </div>
           <div>
             <div className="grid grid-cols-7 gap-2">
               {days.map((day) => {
@@ -82,8 +87,8 @@ function App() {
                   <div
                     onClick={() => toggleTask(day)}
                     key={day}
-                    className={`border-2 border-indigo-600 rounded h-10 w-10 cursor-pointer ${
-                      doneDays[month]?.[day] && "bg-indigo-600"
+                    className={`border-2 border-[#e69875] rounded h-10 w-10 cursor-pointer ${
+                      doneDays[month]?.[day] && "bg-[#e69875]"
                     }`}
                   ></div>
                 );
