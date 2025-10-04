@@ -11,8 +11,8 @@ export default defineConfig({
     VitePWA({
       registerType: "autoUpdate",
       manifest: {
-        name: "My React Vite PWA",
-        short_name: "MyPWA",
+        name: "togglr",
+        short_name: "togglr",
         start_url: "/",
         display: "standalone",
         background_color: "#2E383C",
