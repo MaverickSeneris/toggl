@@ -15,8 +15,8 @@ export default defineConfig({
         short_name: "MyPWA",
         start_url: "/",
         display: "standalone",
-        background_color: "#ffffff",
-        theme_color: "#000000",
+        background_color: "#2E383C",
+        theme_color: "#2E383C",
         icons: [
           {
             src: "pwa-192x192.png",
