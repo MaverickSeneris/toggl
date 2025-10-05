@@ -45,9 +45,8 @@ function App() {
     }
   }, [month]);
 
+  const today = new Date().getDate();
   const toggleTask = (day) => {
-    const today = new Date().getDate();
-
     if (day === today) {
       setDoneDays((prev) => ({
         ...prev,
@@ -99,7 +98,7 @@ function App() {
                     key={day}
                     className={`border-2 border-[#e69875] rounded h-10 w-10 cursor-pointer ${
                       doneDays[month]?.[day] && "bg-[#e69875]"
-                    }`}
+                    } ${day === today && ' border-2 border-red-400' }`}
                   ></div>
                 );
               })}
