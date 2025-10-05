@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
+import toast from "react-hot-toast";
+
 import Card from "./components/Card";
 import Button from "./components/Button";
-import { AiOutlinePlus } from "react-icons/ai";
 import Heading from "./components/Heading";
+import { AiOutlinePlus } from "react-icons/ai";
 
 import getDays from "./utils/getDays";
 import getMonthName from "./utils/getMonthName";
@@ -57,10 +59,17 @@ function App() {
     }
   };
 
-  function handleAddMonthCard() {
-    const monthName = getMonthName();
-    setMonth(monthName);
-  }
+  const handleAddMonthCard = () => {
+    const currentMonth = getMonthName(new Date().getMonth());
+    if (month === currentMonth) {
+      toast.error(`You already have ${currentMonth}!`);
+      return;
+    }
+    setMonth(currentMonth);
+    setDays(getDays(new Date().getMonth()));
+    setDoneDays({});
+    toast.success(`${currentMonth} added!`);
+  };
 
   return (
     <div className="relative bg-[#2E383C] h-screen py-4 px-4">
@@ -70,7 +79,8 @@ function App() {
 
       <Button
         handler={handleAddMonthCard}
-        position={"bottom-4 right-4 absolute "}
+        position="bottom-4 right-4 absolute"
+        aria-label="Add month"
       >
         <AiOutlinePlus size={60} className="text-[#4F5858]" />
       </Button>
