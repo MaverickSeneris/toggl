@@ -66,14 +66,21 @@ function App() {
     }
     setMonth(currentMonth);
     setDays(getDays(new Date().getMonth()));
-    setDoneDays({});
+    setDoneDays((prev) => ({
+      ...prev,
+      [currentMonth]: {},
+    }));
+
     toast.success(`${currentMonth} added!`);
   };
+
+  const currentMonthDone = doneDays[month] || {}; // fallback if month not in object
+  const doneCount = Object.keys(currentMonthDone).length;
 
   return (
     <div className="relative bg-[#2E383C] h-screen py-4 px-4">
       <div className="pb-10">
-        <Heading text="togglr" size={1} color="text-[#dbbc7f]" />
+        <Heading text="togglr💪" size={1} color="text-[#dbbc7f]" />
       </div>
 
       <Button
@@ -86,22 +93,36 @@ function App() {
 
       {month && (
         <Card>
-          <div className="pb-6">
+          <div className="flex justify-between items-center pb-6">
             <Heading text={month} size={2} color="text-[#a7c080]" />
+            <div className="text-xl font-semibold text-[#D3C6AA]">
+              {Object.values(doneDays[month] || {}).filter(Boolean).length}/
+              {days.length} 🔥
+            </div>
           </div>
           <div>
             <div className="grid grid-cols-7 gap-2">
-              {days.map((day) => {
-                return (
-                  <div
-                    onClick={() => toggleTask(day)}
-                    key={day}
-                    className={`border-2 border-[#e69875] rounded h-10 w-10 cursor-pointer ${
-                      doneDays[month]?.[day] && "bg-[#e69875]"
-                    } ${day === today && ' border-2 border-red-400' }`}
-                  ></div>
-                );
-              })}
+              {days.map((day) => (
+                <div
+                  onClick={() => toggleTask(day)}
+                  key={day}
+                  className={`border-2 rounded h-10 w-10 cursor-pointer relative
+    ${doneDays[month]?.[day] ? "bg-[#e69875]" : "bg-transparent"}
+    ${day === today ? "border-red-400 shadow-md" : "border-[#e69875]"}
+    active:scale-95 active:duration-150 active:ease-out
+    transition-transform
+  `}
+                >
+                  {/* Day number at bottom-right */}
+                  <span
+                    className={`absolute bottom-0 right-1 text-[0.65rem] text-[#D3C6AA] ${
+                      doneDays[month]?.[day] && "text-gray-800"
+                    }`}
+                  >
+                    {day}
+                  </span>
+                </div>
+              ))}
             </div>
           </div>
         </Card>
